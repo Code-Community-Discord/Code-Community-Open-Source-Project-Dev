@@ -1,4 +1,4 @@
-# wsl docker compose -f docker-compose-dev.yml build
+# init/update containers: wsl docker compose -f docker-compose-dev.yml build
 # start app: wsl docker compose -f docker-compose-dev.yml up
 # stop app: wsl docker compose -f docker-compose-dev.yml down
 
@@ -26,6 +26,8 @@ services:
       - /app/frontend/node_modules/
     ports:
       - 3000:3000
+    networks:
+      - code-community-app
 networks:
   code-community-app:
     driver: bridge
