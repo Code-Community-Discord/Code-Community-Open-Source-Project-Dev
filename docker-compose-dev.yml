@@ -1,0 +1,31 @@
+# wsl docker compose -f docker-compose-dev.yml build
+# start app: wsl docker compose -f docker-compose-dev.yml up
+# stop app: wsl docker compose -f docker-compose-dev.yml down
+
+services:
+  backend:
+    container_name: code-community-backend
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.dev
+    command: [ "python3", "manage.py", "runserver", "0.0.0.0:8000" ]
+    ports:
+      - 8000:8000
+    networks:
+      - code-community-app
+    volumes:
+      - ./backend:/app/backend
+    restart: "no"
+  frontend:
+    container_name: code-community-frontend
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.dev
+    volumes:
+      - ./frontend:/app/frontend
+      - /app/frontend/node_modules/
+    ports:
+      - 3000:3000
+networks:
+  code-community-app:
+    driver: bridge
